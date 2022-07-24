@@ -15,8 +15,6 @@ source /common.sh
 ### Script ####
 
 unpack /filesystem/home/pi /home/"${BASE_USER}" "${BASE_USER}"
-unpack /filesystem/home/root /root root
-unpack /filesystem/boot /boot
 
 apt update
 
