@@ -1,0 +1,23 @@
+#!/bin/bash
+
+_NAME=$(hostname)
+_IP=$(hostname -I)
+
+echo
+echo "------------------------------------------------------------------------------"
+echo "Access OpenScan from a web browser on your network by navigating to any of:"
+echo
+
+for name in $_NAME;
+do
+    echo "    http://$name.local"
+done
+for ip in $_IP;
+do
+    if [[ $ip =~ .*:.* ]]
+    then
+        echo "    http://[$ip]"
+    else
+        echo "    http://$ip"
+    fi
+done
