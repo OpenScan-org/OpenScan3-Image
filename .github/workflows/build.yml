@@ -47,9 +47,18 @@ jobs:
         NOW=$(date +"%Y-%m-%d-%H%M")
         IMAGE=$NOW-openscan-$DIST_VERSION
         cp repository/src/workspace/*.img $IMAGE.img
+        zip -q $IMAGE.img.zip $IMAGE.img
         echo "::set-output name=image::$IMAGE"
+    
+    - name: Publish relese
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ${{ steps.copy.outputs.image }}.img.zip
+
     # artifact upload will take care of zipping for us
-    - uses: actions/upload-artifact@v1
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
       with:
         name: ${{ steps.copy.outputs.image }}
         path: ${{ steps.copy.outputs.image }}.img
+    
