@@ -32,6 +32,10 @@ apt -y --force-yes install python3-libcamera python3-kms++ python3-pyqt5 python3
 pip3 install numpy --upgrade
 pip3 install picamera2
 
+# gphoto2
+apt -y --force-yes install libexif12 libgphoto2-6 libgphoto2-port12 libltdl7
+pip3 install gphoto2
+
 pushd /home/"${BASE_USER}"
 
 git clone https://github.com/OpenScan-org/OpenScan3.git
