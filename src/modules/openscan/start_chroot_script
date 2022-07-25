@@ -15,6 +15,7 @@ source /common.sh
 ### Script ####
 
 unpack /filesystem/home/pi /home/"${BASE_USER}" "${BASE_USER}"
+unpack /filesystem/boot /boot
 
 apt update
 
@@ -73,11 +74,22 @@ echo 'exit 0' >> /etc/rc.local
 # add a longer welcome text to ~pi/.bashrc / ~${BASE_USER}/.bashrc
 echo "source /home/${BASE_USER}/scripts/welcome" >> /home/${BASE_USER}/.bashrc
 
+#unpack root in the end, so etc file are not overwritten, might need to add two roots int he future
+unpack /filesystem/root /
+
 #####################################################################
 ### setup services
 
 ### Disable GUI at start
 systemctl_if_exists disable lightdm.service || true
+
+### OpenScan
+
+systemctl_if_exists enable openscan.service
+
+### Network monitoring
+
+systemctl_if_exists enable networkcheck.timer
 
 #cleanup
 apt-get clean

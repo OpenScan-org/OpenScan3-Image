@@ -1,0 +1,13 @@
+[Unit]
+Description=OpensCan3 backend api
+After=network.online.target
+Wants=network.online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/OpensCan3
+ExecStart=uvicorn app.main:app --reload --reload-dir app
+
+[Install]
+WantedBy=multi-user.target
