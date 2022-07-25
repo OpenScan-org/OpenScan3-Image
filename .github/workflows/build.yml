@@ -2,6 +2,9 @@ name: Build Image
 
 on: 
   workflow_dispatch:
+  push:
+    branches:    
+      - 'main'
 
 jobs:
   build:
@@ -61,4 +64,3 @@ jobs:
       with:
         name: ${{ steps.copy.outputs.image }}
         path: ${{ steps.copy.outputs.image }}.img
-    
