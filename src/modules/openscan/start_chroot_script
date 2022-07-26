@@ -25,7 +25,7 @@ echo "removing:" $remove_extra
 apt remove -y --purge  $remove_extra
 apt autoremove -y
 
-apt -y --force-yes install python3 python3-virtualenv python3-dev git screen subversion cmake cmake-data avahi-daemon libavahi-compat-libdnssd1 libffi-dev libssl-dev libatlas3-base unzip
+apt -y --force-yes install python3 python3-virtualenv python3-dev git screen subversion cmake cmake-data avahi-daemon libavahi-compat-libdnssd1 libffi-dev libssl-dev libatlas3-base unzip build-essential curl
 
 # picamera2
 apt -y --force-yes install python3-libcamera python3-kms++ python3-pyqt5 python3-prctl libatlas-base-dev ffmpeg python3-pip
@@ -36,10 +36,29 @@ pip3 install picamera2
 apt -y --force-yes install libexif12 libgphoto2-6 libgphoto2-port12 libltdl7
 pip3 install gphoto2
 
+# Node-RED
+bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered) --confirm-pi --confirm-install --node16
+pushd /home/"${BASE_USER}/.node_red"
+npm install node-red-dashboard node-red-node-ui-table
+popd
+
+# arducam
+wget -O install_pivariety_pkgs.sh https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/install_script/install_pivariety_pkgs.sh
+chmod +x install_pivariety_pkgs.sh
+# imx519
+./install_pivariety_pkgs.sh -p imx519_kernel_driver_low_speed
+# 64mp
+./install_pivariety_pkgs.sh -p 64mp_pi_hawk_eye_kernel_driver
+# pivarity
+./install_pivariety_pkgs.sh -p kernel_driver
+
+
 pushd /home/"${BASE_USER}"
 
 git clone https://github.com/OpenScan-org/OpenScan3.git
-pip install -r /home/"${BASE_USER}"/OpenScan3/requirements.txt
+pip3 install -r /home/"${BASE_USER}"/OpenScan3/requirements.txt
+
+cp /home/"${BASE_USER}"/flows/flows.json /home/"${BASE_USER}"/.node-red
 
 popd
 
@@ -94,6 +113,10 @@ systemctl_if_exists enable openscan.service
 ### Network monitoring
 
 systemctl_if_exists enable networkcheck.timer
+
+# Node-RED
+
+sudo systemctl enable nodered.service
 
 #cleanup
 apt-get clean
