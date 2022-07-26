@@ -1,12 +1,12 @@
 [Unit]
-Description=OpensCan3 backend api
+Description=OpenScan3 backend api
 After=network.online.target
 Wants=network.online.target
 
 [Service]
 Type=simple
 User=pi
-WorkingDirectory=/home/pi/OpensCan3
+WorkingDirectory=/home/pi/OpenScan3
 ExecStart=uvicorn app.main:app --host 0.0.0.0
 
 [Install]
