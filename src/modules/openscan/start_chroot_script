@@ -37,7 +37,7 @@ apt -y --force-yes install libexif12 libgphoto2-6 libgphoto2-port12 libltdl7
 pip3 install gphoto2
 
 # Node-RED
-bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered) --confirm-pi --confirm-install --node16 --nodered-user ${BASE_USER}
+bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered) --nodered-user=${BASE_USER} --confirm-pi --confirm-install --node16
 pushd /home/"${BASE_USER}/.node_red"
 npm install node-red-dashboard node-red-node-ui-table
 popd
