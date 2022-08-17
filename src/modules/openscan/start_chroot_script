@@ -50,6 +50,8 @@ apt -y --force-yes install nginx
 # ./install_pivariety_pkgs.sh -p kernel_driver
 
 
+# OpenScan firmware
+
 pushd /home/"${BASE_USER}"
 
 git clone https://github.com/OpenScan-org/OpenScan3.git
@@ -58,6 +60,13 @@ chown -R ${BASE_USER}:${BASE_USER} /home/"${BASE_USER}"/OpenScan3
 pip3 install -r /home/"${BASE_USER}"/OpenScan3/requirements.txt
 
 popd
+
+# OpenScan client
+
+client_url="$(curl -s https://api.github.com/repos/OpenScan-org/OpenScan3-Client/releases/latest | jq -r ".assets[] | select(.name | test(\"client\")) | .browser_download_url")"
+wget $client_url -O openscan3_client.zip
+
+unzip -qo openscan3_client.zip -d /var/www/html
 
 # allow pi / ${BASE_USER} user to run shutdown and service commands
 echo "${BASE_USER} ALL=NOPASSWD: /sbin/shutdown" > /etc/sudoers.d/octoprint-shutdown
