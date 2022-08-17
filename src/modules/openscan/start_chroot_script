@@ -39,15 +39,15 @@ pip3 install gphoto2
 # nginx
 apt -y --force-yes install nginx
 
-# arducam
-wget -O install_pivariety_pkgs.sh https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/install_script/install_pivariety_pkgs.sh
-chmod +x install_pivariety_pkgs.sh
-# imx519
-./install_pivariety_pkgs.sh -p imx519_kernel_driver_low_speed
-# 64mp
-./install_pivariety_pkgs.sh -p 64mp_pi_hawk_eye_kernel_driver
-# pivarity
-./install_pivariety_pkgs.sh -p kernel_driver
+# # arducam
+# wget -O install_pivariety_pkgs.sh https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/install_script/install_pivariety_pkgs.sh
+# chmod +x install_pivariety_pkgs.sh
+# # imx519
+# ./install_pivariety_pkgs.sh -p imx519_kernel_driver_low_speed
+# # 64mp
+# ./install_pivariety_pkgs.sh -p 64mp_pi_hawk_eye_kernel_driver
+# # pivarity
+# ./install_pivariety_pkgs.sh -p kernel_driver
 
 
 pushd /home/"${BASE_USER}"
