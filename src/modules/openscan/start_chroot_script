@@ -36,13 +36,8 @@ pip3 install picamera2
 apt -y --force-yes install libexif12 libgphoto2-6 libgphoto2-port12 libltdl7
 pip3 install gphoto2
 
-# Node-RED
-curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-apt install -y nodejs
-npm install -g --unsafe-perm node-red
-pushd /home/"${BASE_USER}/.node_red"
-npm install node-red-dashboard node-red-node-ui-table
-popd
+# nginx
+apt -y --force-yes install nginx
 
 # arducam
 wget -O install_pivariety_pkgs.sh https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/install_script/install_pivariety_pkgs.sh
@@ -61,8 +56,6 @@ git clone https://github.com/OpenScan-org/OpenScan3.git
 chown -R ${BASE_USER}:${BASE_USER} /home/"${BASE_USER}"/OpenScan3
 
 pip3 install -r /home/"${BASE_USER}"/OpenScan3/requirements.txt
-
-cp /home/"${BASE_USER}"/flows/flows.json /home/"${BASE_USER}"/.node-red
 
 popd
 
@@ -117,10 +110,6 @@ systemctl_if_exists enable openscan.service
 ### Network monitoring
 
 systemctl_if_exists enable networkcheck.timer
-
-# Node-RED
-
-sudo systemctl enable nodered.service
 
 #cleanup
 apt-get clean
