@@ -37,7 +37,7 @@ apt -y --force-yes install libexif12 libgphoto2-6 libgphoto2-port12 libltdl7
 pip3 install gphoto2
 
 # nginx
-sudo apt install nginx
+apt -y --force-yes install nginx
 
 # arducam
 wget -O install_pivariety_pkgs.sh https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/install_script/install_pivariety_pkgs.sh
