@@ -58,10 +58,3 @@ jobs:
       with:
         tag_name:  ${{ steps.copy.outputs.image }}
         files: ${{ steps.copy.outputs.image }}.img.zip
-
-    # artifact upload will take care of zipping for us
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: ${{ steps.copy.outputs.image }}
-        path: ${{ steps.copy.outputs.image }}.img
