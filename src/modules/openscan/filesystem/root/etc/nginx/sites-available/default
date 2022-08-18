@@ -1,0 +1,33 @@
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /home/pi/OpenScan3-Client;
+
+        add_header X-Frame-Options "SAMEORIGIN";
+        add_header X-XSS-Protection "1; mode=block";
+        add_header X-Content-Type-Options "nosniff";
+
+        index index.html;
+
+        charset utf-8;
+
+        server_name _;
+
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+
+        location ~* \.(html)$ {
+            add_header        Cache-Control "no-cache, must-revalidate";
+        }
+
+        location = /robots.txt  { access_log off; log_not_found off; }
+
+        access_log off;
+        error_log  /var/log/nginx/openscan3_client.log error;
+
+        location ~ /\.(?!well-known).* {
+            deny all;
+        }
+}
