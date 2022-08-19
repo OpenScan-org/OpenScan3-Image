@@ -5,6 +5,10 @@ on:
   repository_dispatch:
     types: [client-release, firmware-release]
 
+concurrency:
+  group: "build"
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: [self-hosted, rpi]
