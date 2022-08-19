@@ -3,6 +3,7 @@ name: Build Image
 on: 
   workflow_dispatch:
   repository_dispatch:
+    types: [client-release, firmware-release]
 
 jobs:
   build:
