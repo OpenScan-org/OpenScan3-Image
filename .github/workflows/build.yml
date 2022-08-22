@@ -16,7 +16,7 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt update
-        sudo apt -y --force-yes install coreutils p7zip-full qemu-user-static wget kmod
+        sudo apt -y --force-yes install coreutils p7zip-full qemu-user-static wget kmod fdisk
     - name: Checkout CustomPiOS
       uses: actions/checkout@v3
       with:
