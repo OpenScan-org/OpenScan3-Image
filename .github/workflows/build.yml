@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ["self-hosted", "rpi"]
     steps:
       - name: Clear workspace
         run: sudo rm -rf *
