@@ -52,7 +52,6 @@ jobs:
 
       - name: Build Image
         run: |
-          sudo modprobe loop
           cd repository/src
           sudo bash -x ./build_dist
 
