@@ -58,13 +58,36 @@ jobs:
         run: |
           source repository/src/config
           NOW=$(date +"%Y-%m-%d-%H%M")
-          IMAGE=$NOW-openscan
-          cp repository/src/workspace/*.img $IMAGE.img
+          IMAGE=openscan-$NOW
+          mv repository/src/workspace/*.img $IMAGE.img
           zip -qm $IMAGE.img.zip $IMAGE.img
           echo "::set-output name=image::$IMAGE"
+
+      - name: "Package the image"
+        id: package-image
+        uses: OctoPrint/actions/package-rpi-image@main
+        with:
+          image_path: "build/${{ steps.copy.outputs.image }}.img.zip"
+
+      - name: "Generate rpi-imager.json snippet"
+        uses: OctoPrint/actions/rpi-imager-snippet@main
+        with:
+          name: "OpenScan"
+          description: "Raspberry OS images with the latest OpenScan software ready to boot on your RPi."
+          icon: "https://raw.githubusercontent.com/OpenScan-org/OpenScan3-Image/main/media/rpi-imager-OpenScan.png"
+          url: "https://github.com/OpenScan-org/OpenScan3-Image/releases/download/${{ steps.copy.outputs.image }}/${{ steps.copy.outputs.image }}.img.zip"
+          output: "rpi-imager.json"
+          image_sha256: ${{ steps.package-image.outputs.image_sha256 }}
+          image_size: ${{ steps.package-image.outputs.image_size }}
+          zip_sha256: ${{ steps.package-image.outputs.zip_sha256 }}
+          zip_size: ${{ steps.package-image.outputs.zip_size }}
 
       - name: Publish relese
         uses: Polectron/action-gh-release@v1
         with:
           tag_name: ${{ steps.copy.outputs.image }}
-          files: ${{ steps.copy.outputs.image }}.img.zip
+          files: |
+            ${{ steps.copy.outputs.image }}.img.zip
+            ${{ steps.copy.outputs.image }}.img.zip.md5
+            ${{ steps.copy.outputs.image }}.img.zip.sha256
+            rpi-imager.json
