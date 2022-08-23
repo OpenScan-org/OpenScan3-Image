@@ -63,14 +63,13 @@ jobs:
           NOW=$(date +"%Y-%m-%d-%H%M")
           IMAGE=openscan-$NOW
           mv repository/src/workspace/*.img $IMAGE.img
-          zip -qm $IMAGE.img.zip $IMAGE.img
           echo "::set-output name=image::$IMAGE"
 
       - name: "Package the image"
         id: package-image
         uses: OctoPrint/actions/package-rpi-image@main
         with:
-          image_path: "build/${{ steps.copy.outputs.image }}.img.zip"
+          image_path: "${{ steps.copy.outputs.image }}.img.zip"
 
       - name: "Generate rpi-imager.json snippet"
         uses: OctoPrint/actions/rpi-imager-snippet@main
