@@ -69,7 +69,7 @@ jobs:
         id: package-image
         uses: OctoPrint/actions/package-rpi-image@main
         with:
-          image_path: "${{ steps.copy.outputs.image }}.img.zip"
+          image_path: "${{ steps.copy.outputs.image }}.img"
 
       - name: "Generate rpi-imager.json snippet"
         uses: OctoPrint/actions/rpi-imager-snippet@main
