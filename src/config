@@ -2,7 +2,7 @@ export DIST_NAME=OpenScan
 export DIST_VERSION=0.1.0
 export MODULES="base(raspicam, network, disable-services(openscan), password-for-sudo, disable-services(auto-hotspot), auto-mount-removable)"
 
-export RPI_IMAGER_NAME="${DIST_NAME} version ${DIST_VERSION}"
+export RPI_IMAGER_NAME="${DIST_NAME}"
 export RPI_IMAGER_DESCRIPTION="A Raspberry Pi distribution for 3D scanners. Ships OctoScan out-of-the-box."
 export RPI_IMAGER_ICON="https://raw.githubusercontent.com/OpenScan-org/OpenScan3-Image/main/media/rpi-imager-OpenScan.png"
 

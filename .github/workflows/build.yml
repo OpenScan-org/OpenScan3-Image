@@ -59,7 +59,7 @@ jobs:
       run: |
         source repository/src/config
         NOW=$(date +"%Y-%m-%d-%H%M")
-        IMAGE=$NOW-openscan-$DIST_VERSION
+        IMAGE=$NOW-openscan
         cp repository/src/workspace/*.img $IMAGE.img
         zip -qm $IMAGE.img.zip $IMAGE.img
         echo "::set-output name=image::$IMAGE"
