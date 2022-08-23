@@ -89,7 +89,7 @@ jobs:
         with:
           tag_name: ${{ steps.copy.outputs.image }}
           files: |
-            ${{ steps.copy.outputs.image }}.img.zip
-            ${{ steps.copy.outputs.image }}.img.zip.md5
-            ${{ steps.copy.outputs.image }}.img.zip.sha256
+            ${{ steps.copy.outputs.image }}.zip
+            ${{ steps.copy.outputs.image }}.zip.md5
+            ${{ steps.copy.outputs.image }}.zip.sha256
             rpi-imager.json
