@@ -1,6 +1,6 @@
 name: Build Image
 
-on: 
+on:
   workflow_dispatch:
   repository_dispatch:
     types: [client-release, firmware-release]
@@ -13,59 +13,58 @@ jobs:
   build:
     runs-on: [self-hosted, rpi]
     steps:
-    
-    - name: Clear workspace
-      run: sudo rm -rf *
-    
-    - name: Install Dependencies
-      run: |
-        sudo apt update
-        sudo apt -y --force-yes install coreutils p7zip-full qemu-user-static wget kmod fdisk python3 python3-dev zip lsof
+      - name: Clear workspace
+        run: sudo rm -rf *
 
-    - name: Checkout CustomPiOS
-      uses: actions/checkout@v3
-      with:
-        repository: 'guysoft/CustomPiOS'
-        path: CustomPiOS
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt -y --force-yes install coreutils p7zip-full qemu-user-static wget kmod fdisk python3 python3-dev zip lsof
 
-    - name: Checkout Project Repository
-      uses: actions/checkout@v3
-      with:
-        path: repository
-        submodules: true
+      - name: Checkout CustomPiOS
+        uses: actions/checkout@v3
+        with:
+          repository: "guysoft/CustomPiOS"
+          path: CustomPiOS
 
-    - name: Download Raspbian Image
-      run: |
-        cd repository/src/image
-        wget -c --trust-server-names 'https://downloads.raspberrypi.org/raspios_lite_armhf_latest'
+      - name: Checkout Project Repository
+        uses: actions/checkout@v3
+        with:
+          path: repository
+          submodules: true
 
-    - name: Update CustomPiOS Paths
-      run: |
-        cd repository/src
-        ../../CustomPiOS/src/update-custompios-paths
-    
-    - name: Force apt mirror to work around intermittent mirror hiccups
-      run: |
-        echo "OCTOPI_APTMIRROR=http://mirror.us.leaseweb.net/raspbian/raspbian" > repository/src/config.local
-    
-    - name: Build Image
-      run: |
-        sudo modprobe loop
-        cd repository/src
-        sudo bash -x ./build_dist
-    
-    - name: Copy output
-      id: copy
-      run: |
-        source repository/src/config
-        NOW=$(date +"%Y-%m-%d-%H%M")
-        IMAGE=$NOW-openscan
-        cp repository/src/workspace/*.img $IMAGE.img
-        zip -qm $IMAGE.img.zip $IMAGE.img
-        echo "::set-output name=image::$IMAGE"
-    
-    - name: Publish relese
-      uses: Polectron/action-gh-release@v1
-      with:
-        tag_name:  ${{ steps.copy.outputs.image }}
-        files: ${{ steps.copy.outputs.image }}.img.zip
+      - name: Download Raspbian Image
+        run: |
+          cd repository/src/image
+          wget -c --trust-server-names 'https://downloads.raspberrypi.org/raspios_lite_armhf_latest'
+
+      - name: Update CustomPiOS Paths
+        run: |
+          cd repository/src
+          ../../CustomPiOS/src/update-custompios-paths
+
+      - name: Force apt mirror to work around intermittent mirror hiccups
+        run: |
+          echo "OCTOPI_APTMIRROR=http://mirror.us.leaseweb.net/raspbian/raspbian" > repository/src/config.local
+
+      - name: Build Image
+        run: |
+          sudo modprobe loop
+          cd repository/src
+          sudo bash -x ./build_dist
+
+      - name: Copy output
+        id: copy
+        run: |
+          source repository/src/config
+          NOW=$(date +"%Y-%m-%d-%H%M")
+          IMAGE=$NOW-openscan
+          cp repository/src/workspace/*.img $IMAGE.img
+          zip -qm $IMAGE.img.zip $IMAGE.img
+          echo "::set-output name=image::$IMAGE"
+
+      - name: Publish relese
+        uses: Polectron/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.copy.outputs.image }}
+          files: ${{ steps.copy.outputs.image }}.img.zip
