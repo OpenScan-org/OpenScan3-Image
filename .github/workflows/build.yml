@@ -62,7 +62,7 @@ jobs:
           source repository/src/config
           NOW=$(date +"%Y-%m-%d-%H%M")
           IMAGE=openscan-$NOW
-          mv repository/src/workspace/*.img $IMAGE.img
+          sudo mv repository/src/workspace/*.img $IMAGE.img
           echo "::set-output name=image::$IMAGE"
 
       - name: "Package the image"
