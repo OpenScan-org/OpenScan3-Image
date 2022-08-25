@@ -7,7 +7,7 @@ Wants=network.online.target
 Type=simple
 User=pi
 WorkingDirectory=/home/pi/OpenScan3
-ExecStart=uvicorn app.main:app --host 0.0.0.0
+ExecStart=uvicorn app.main:app --root-path /api
 
 [Install]
 WantedBy=multi-user.target

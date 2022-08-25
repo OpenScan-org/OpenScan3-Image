@@ -18,6 +18,10 @@ server {
             try_files $uri $uri/ /index.html;
         }
 
+        location /api/ {
+            proxy_pass http://localhost:8000/;
+        }
+
         location ~* \.(html)$ {
             add_header        Cache-Control "no-cache, must-revalidate";
         }
