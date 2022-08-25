@@ -67,7 +67,8 @@ client_url="$(curl -s https://api.github.com/repos/OpenScan-org/OpenScan3-Client
 wget $client_url -O openscan3_client.zip
 
 mkdir OpenScan3-Client
-unzip -qo openscan3_client.zip -d /home/pi/OpenScan3-Client
+unzip -qo openscan3_client.zip -d /home/${BASE_USER}/OpenScan3-Client
+chown -R ${BASE_USER}:${BASE_USER} /home/"${BASE_USER}"/OpenScan3-Client
 
 # allow pi / ${BASE_USER} user to run shutdown and service commands
 echo "${BASE_USER} ALL=NOPASSWD: /sbin/shutdown" > /etc/sudoers.d/octoprint-shutdown
